@@ -1,0 +1,12 @@
+# Dockerfile for HAProxy + Nginx
+FROM fixed-challenge:version2 
+
+# Copy the fixed HAProxy config
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+
+# Expose the HAProxy and Nginx ports
+EXPOSE 80 8000 8001 8002
+
+# Start HAProxy and Nginx
+CMD service haproxy restart && service nginx restart && tail -f /dev/null
+

@@ -1,0 +1,17 @@
+# Dockerfile for Metrics Scraper
+FROM python:3.9-slim
+
+# Install dependencies
+RUN pip install flask psutil
+
+# Copy the metrics scraping script
+COPY scraper.py /app/scraper.py
+
+WORKDIR /app
+
+# Expose port for the metrics
+EXPOSE 5000
+
+# Run the scraping app
+CMD ["python", "scraper.py"]
+

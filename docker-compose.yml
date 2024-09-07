@@ -1,20 +1,21 @@
-version: '3.8'
-
+version: '3'
 services:
   haproxy_nginx:
-    image: pegasus2305/pratham:updated-version
+    build:
+      context: .
+      dockerfile: Dockerfile.haproxy_nginx
     ports:
-      - "80:80"
-    networks:
-      - monitoring
+      - "8080:80"
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    depends_on:
+      - metrics_scraper
 
-  node_exporter:
-    image: prom/node-exporter:latest
+  metrics_scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.metrics
     ports:
-      - "9100:9100"
-    networks:
-      - monitoring
+      - "5000:5000"
 
-networks:
-  monitoring:
-    driver: bridge
